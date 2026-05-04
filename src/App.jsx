@@ -3,6 +3,7 @@ import { useRunPod } from './hooks/useRunPod'
 import Settings from './components/Settings'
 import PromptForm from './components/PromptForm'
 import ImageGallery from './components/ImageGallery'
+import LocalComfyTab from './components/LocalComfyTab'
 import { getAllImages, updateRating } from './utils/imageStore'
 import logger from './utils/logger'
 
@@ -23,6 +24,7 @@ function ProjectSelector({ value, onChange }) {
 }
 
 export default function App() {
+  const [tab, setTab] = useState('runpod')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [project, setProject] = useState('')
   const [storedImages, setStoredImages] = useState([])
@@ -75,7 +77,12 @@ export default function App() {
 
       {settingsOpen && <Settings onClose={() => setSettingsOpen(false)} />}
 
-      <main className="app-main">
+      <div className="tabs">
+        <button className={`tab-btn${tab === 'runpod' ? ' active' : ''}`} onClick={() => setTab('runpod')}>RunPod</button>
+        <button className={`tab-btn${tab === 'local' ? ' active' : ''}`} onClick={() => setTab('local')}>Local ComfyUI</button>
+      </div>
+
+      {tab === 'local' ? <LocalComfyTab project={project} /> : <main className="app-main">
         <section className="panel panel-form">
           <PromptForm onSubmit={handleSubmit} disabled={isGenerating} initialValues={reuseValues} />
         </section>
@@ -91,7 +98,7 @@ export default function App() {
             onReuseSettings={setReuseValues}
           />
         </section>
-      </main>
+      </main>}
     </div>
   )
 }

@@ -19,3 +19,20 @@ export function clearSettings() {
   localStorage.removeItem(KEYS.API_KEY)
   localStorage.removeItem(KEYS.ENDPOINT_ID)
 }
+
+const LOCAL_KEYS = {
+  HOST: 'comfyfront_local_host',
+  PORT: 'comfyfront_local_port',
+}
+
+export function saveLocalSettings({ host, port }) {
+  localStorage.setItem(LOCAL_KEYS.HOST, host)
+  localStorage.setItem(LOCAL_KEYS.PORT, port)
+}
+
+export function loadLocalSettings() {
+  return {
+    host: localStorage.getItem(LOCAL_KEYS.HOST) || '127.0.0.1',
+    port: localStorage.getItem(LOCAL_KEYS.PORT) || '8188',
+  }
+}

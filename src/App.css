@@ -68,6 +68,28 @@ body {
   padding: 1.25rem;
 }
 
+/* ── Tabs ─────────────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  padding: 0.6rem 1.1rem;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: -1px;
+  transition: color 0.15s;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
 /* ── Buttons ──────────────────────────────────────────────── */
 button {
   font-family: var(--font);
@@ -353,6 +375,55 @@ textarea { resize: vertical; }
   transition: border-color 0.15s, color 0.15s;
 }
 .btn-reuse:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── Batch queue ──────────────────────────────────────────── */
+.batch-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.batch-list {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.batch-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.65rem;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.batch-item:last-child { border-bottom: none; }
+
+.batch-item-num {
+  color: var(--text-muted);
+  min-width: 1.2rem;
+}
+
+.batch-item-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text);
+}
+
+.batch-item-remove {
+  background: none;
+  border: none;
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  padding: 0.1rem 0.35rem;
+  font-size: 11px;
+  line-height: 1;
+}
+.batch-item-remove:hover { color: var(--error-text); }
 
 /* ── Spinner ──────────────────────────────────────────────── */
 .spinner {
