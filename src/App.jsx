@@ -4,6 +4,9 @@ import Settings from './components/Settings'
 import PromptForm from './components/PromptForm'
 import ImageGallery from './components/ImageGallery'
 import LocalComfyTab from './components/LocalComfyTab'
+import RunPodVideoTab from './components/RunPodVideoTab'
+import BatchRunTab from './components/BatchRunTab'
+import StatsPanel from './components/StatsPanel'
 import { getAllImages, updateRating } from './utils/imageStore'
 import logger from './utils/logger'
 
@@ -80,9 +83,20 @@ export default function App() {
       <div className="tabs">
         <button className={`tab-btn${tab === 'runpod' ? ' active' : ''}`} onClick={() => setTab('runpod')}>RunPod</button>
         <button className={`tab-btn${tab === 'local' ? ' active' : ''}`} onClick={() => setTab('local')}>Local ComfyUI</button>
+        <button className={`tab-btn${tab === 'video' ? ' active' : ''}`} onClick={() => setTab('video')}>RunPod Video</button>
+        <button className={`tab-btn${tab === 'batch' ? ' active' : ''}`} onClick={() => setTab('batch')}>Batch</button>
+        <button className={`tab-btn${tab === 'stats' ? ' active' : ''}`} onClick={() => setTab('stats')}>Stats</button>
       </div>
 
-      {tab === 'local' ? <LocalComfyTab project={project} /> : <main className="app-main">
+      {tab === 'local' && <LocalComfyTab project={project} />}
+      {tab === 'video' && <RunPodVideoTab project={project} />}
+      {tab === 'batch' && <BatchRunTab />}
+      {tab === 'stats' && (
+        <div className="panel" style={{ marginTop: 0 }}>
+          <StatsPanel />
+        </div>
+      )}
+      {tab === 'runpod' && <main className="app-main">
         <section className="panel panel-form">
           <PromptForm onSubmit={handleSubmit} disabled={isGenerating} initialValues={reuseValues} />
         </section>

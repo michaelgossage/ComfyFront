@@ -1,0 +1,628 @@
+{
+  "104": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "scale_by": 1,
+      "image": [
+        "111",
+        0
+      ]
+    },
+    "class_type": "ImageScaleBy",
+    "_meta": {
+      "title": "Upscale Image By"
+    }
+  },
+  "105": {
+    "inputs": {
+      "image": [
+        "104",
+        0
+      ]
+    },
+    "class_type": "GetImageSize",
+    "_meta": {
+      "title": "Get Image Size"
+    }
+  },
+  "107": {
+    "inputs": {
+      "frame_rate": [
+        "129",
+        0
+      ],
+      "positive": [
+        "121",
+        0
+      ],
+      "negative": [
+        "110",
+        0
+      ]
+    },
+    "class_type": "LTXVConditioning",
+    "_meta": {
+      "title": "LTXVConditioning"
+    }
+  },
+  "108": {
+    "inputs": {
+      "width": [
+        "105",
+        0
+      ],
+      "height": [
+        "105",
+        1
+      ],
+      "length": [
+        "112",
+        0
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptyLTXVLatentVideo",
+    "_meta": {
+      "title": "EmptyLTXVLatentVideo"
+    }
+  },
+  "109": {
+    "inputs": {
+      "video_latent": [
+        "153",
+        0
+      ],
+      "audio_latent": [
+        "171",
+        0
+      ]
+    },
+    "class_type": "LTXVConcatAVLatent",
+    "_meta": {
+      "title": "LTXVConcatAVLatent"
+    }
+  },
+  "110": {
+    "inputs": {
+      "text": "deformed iris, distorted limbs, blurry, low quality, still frame, frames, watermark, overlay, titles, has blurbox, has subtitles, slow, morphing, wobble, 3 legs, spinning, too many fingers, webbed fingers, wrong hand count, wrong finger count, stretching, sighing, frozen face, yawning",
+      "clip": [
+        "146",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "111": {
+    "inputs": {
+      "width": 960,
+      "height": 1280,
+      "batch_size": 1,
+      "color": 0
+    },
+    "class_type": "EmptyImage",
+    "_meta": {
+      "title": "EmptyImage"
+    }
+  },
+  "112": {
+    "inputs": {
+      "value": 201
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Length"
+    }
+  },
+  "115": {
+    "inputs": {
+      "noise_seed": [
+        "309",
+        0
+      ]
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "121": {
+    "inputs": {
+      "text": [
+        "239",
+        0
+      ],
+      "clip": [
+        "146",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "128": {
+    "inputs": {
+      "cfg": 1,
+      "model": [
+        "311",
+        0
+      ],
+      "positive": [
+        "107",
+        0
+      ],
+      "negative": [
+        "107",
+        1
+      ]
+    },
+    "class_type": "CFGGuider",
+    "_meta": {
+      "title": "CFGGuider"
+    }
+  },
+  "129": {
+    "inputs": {
+      "value": 25
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "Frame Rate(float)"
+    }
+  },
+  "132": {
+    "inputs": {
+      "lora_name": "ltx-2.3-22b-distilled-lora-384-1.1.safetensors",
+      "strength_model": 0.6,
+      "model": [
+        "206",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Distilled LoRA"
+    }
+  },
+  "135": {
+    "inputs": {
+      "sampler_name": "res_2s"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "146": {
+    "inputs": {
+      "clip_name1": "gemma_3_12B_it_fp8_e4m3fn.safetensors",
+      "clip_name2": "ltx-2.3-22b-dev_embeddings_connectors.safetensors",
+      "type": "ltxv",
+      "device": "default"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": {
+      "title": "DualCLIPLoader"
+    }
+  },
+  "149": {
+    "inputs": {
+      "image": "01.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "151": {
+    "inputs": {
+      "longer_edge": 2560,
+      "images": [
+        "149",
+        0
+      ]
+    },
+    "class_type": "ResizeImagesByLongerEdge",
+    "_meta": {
+      "title": "Resize Images by Longer Edge"
+    }
+  },
+  "152": {
+    "inputs": {
+      "img_compression": 0,
+      "image": [
+        "151",
+        0
+      ]
+    },
+    "class_type": "LTXVPreprocess",
+    "_meta": {
+      "title": "LTXVPreprocess"
+    }
+  },
+  "153": {
+    "inputs": {
+      "strength": 0.8,
+      "bypass": false,
+      "vae": [
+        "206",
+        2
+      ],
+      "image": [
+        "152",
+        0
+      ],
+      "latent": [
+        "108",
+        0
+      ]
+    },
+    "class_type": "LTXVImgToVideoInplace",
+    "_meta": {
+      "title": "LTXVImgToVideoInplace"
+    }
+  },
+  "171": {
+    "inputs": {
+      "frames_number": [
+        "112",
+        0
+      ],
+      "frame_rate": 25,
+      "batch_size": 1,
+      "audio_vae": [
+        "385",
+        0
+      ]
+    },
+    "class_type": "LTXVEmptyLatentAudio",
+    "_meta": {
+      "title": "LTXV Empty Latent Audio"
+    }
+  },
+  "172": {
+    "inputs": {
+      "noise": [
+        "115",
+        0
+      ],
+      "guider": [
+        "128",
+        0
+      ],
+      "sampler": [
+        "135",
+        0
+      ],
+      "sigmas": [
+        "299",
+        0
+      ],
+      "latent_image": [
+        "109",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "206": {
+    "inputs": {
+      "ckpt_name": "ltx-2.3-22b-dev.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "239": {
+    "inputs": {
+      "model_name": "Qwen3-VL-4B-Instruct",
+      "quantization": "8-bit (Balanced)",
+      "attention_mode": "auto",
+      "preset_prompt": "🖼️ Ultra Detailed Description",
+      "custom_prompt": [
+        "288",
+        0
+      ],
+      "max_tokens": 512,
+      "keep_model_loaded": false,
+      "seed": [
+        "309",
+        0
+      ],
+      "image": [
+        "264",
+        0
+      ]
+    },
+    "class_type": "AILab_QwenVL",
+    "_meta": {
+      "title": "QwenVL"
+    }
+  },
+  "243": {
+    "inputs": {
+      "lora_name": "LTX2.3_Crisp_Enhance.safetensors",
+      "strength_model": 1,
+      "model": [
+        "132",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "264": {
+    "inputs": {
+      "longer_edge": 1600,
+      "images": [
+        "149",
+        0
+      ]
+    },
+    "class_type": "ResizeImagesByLongerEdge",
+    "_meta": {
+      "title": "Resize Images by Longer Edge"
+    }
+  },
+  "270": {
+    "inputs": {
+      "av_latent": [
+        "172",
+        1
+      ]
+    },
+    "class_type": "LTXVSeparateAVLatent",
+    "_meta": {
+      "title": "LTXVSeparateAVLatent"
+    }
+  },
+  "272": {
+    "inputs": {
+      "filename_prefix": "video/LTX-2",
+      "format": "mp4",
+      "codec": "auto",
+      "video": [
+        "273",
+        0
+      ]
+    },
+    "class_type": "SaveVideo",
+    "_meta": {
+      "title": "Save Video"
+    }
+  },
+  "273": {
+    "inputs": {
+      "fps": [
+        "129",
+        0
+      ],
+      "images": [
+        "376",
+        0
+      ]
+    },
+    "class_type": "CreateVideo",
+    "_meta": {
+      "title": "Create Video"
+    }
+  },
+  "287": {
+    "inputs": {
+      "text": "\n\n---\n\n## **Core Prompting Directives**\n\n1.\t⁠**The \"Single Flow\" Paragraph:** Always output the final prompt as a single, continuous, immersive paragraph. Do not use bullet points or line breaks within the prompt itself. Only describe positive instructions. Follow the structure: “\n[Shot Type/Angle] of [Detailed description of Subject and clothing] [Clear description of sequential actions and movements] in [Simple description of Environment/Lighting] and [Camera Movement].\"\n\n2.\t⁠**Present-Tense Action:** Use active, present-tense verbs (e.g., \"the light flickers,\" \"she sprints,\" \"the camera dollys\").\n3.\t⁠**Length and Duration Scaling:** LTX-2.3 requires more detail for longer videos. For a standard 10-second generation, your prompt must be **under 100 words**. If the user's request is short, you must expand it with movement, environmental and technical detail. No fluff words.\n4.\t⁠**Directing via Realistic Physicality:** Never use abstract emotional labels like \"sad\" or \"happy.\" Instead, describe the **physical manifestation**: \"her eyes well with tears and her hands tremble slightly\" or \"his jaw tightens and he avoids the camera's gaze.\" keep movement direction physically possible.\n5.\t⁠**Spatial Relationships:** Be explicit about the layout (e.g., \"to the left of the frame,\" \"in the deep background,\" \"closer to the lens than the subject\").\n\n---\n\n## **The Six-Element Structure**\n\nEvery prompt you generate must integrate these six components seamlessly:\n\n1.\t⁠**Establish the Shot:** Define shot scale (Macro, Close-up, Wide, Establishing) and genre (Noir, Sci-Fi, Documentary).\n2.\t⁠**Set the Scene:** Describe lighting (Golden hour, rim light, flickering neon), textures (Worn leather, wet pavement).\n3.\t⁠**Describe the Action:** A natural sequence of events from beginning to end.\n4.\t⁠**Define the Characters:** Age, hairstyle, specific clothing, and physical acting beats.\n5.\t⁠**Identify Camera Movement:** Specify how and when the camera moves (static, Dolly-in, handheld tracking, crane-up).\n6.\t⁠**Describe the Audio:** Include ambient sound, foley (the crunch of leaves), and specific vocal qualities (raspy, gravitas, robotic).\n\n---\n\n## **Specialized Workflows**\n\n*   **Dialogue & Acting:** For speaking characters, break lines into short phrases. Insert acting directions *between* phrases.\n\n*   *Template:* \"Character name says in a [vocal style], '[Line 1]'. They [physical action], then continue, '[Line 2]'.\"\n\n*   **Image-to-Video (I2V):** Do NOT describe the static image. Focus entirely on the **transition to motion**—how the stillness breaks, what starts moving first, and what sounds emerge.\n\n*   **Portrait Native:** If the user specifies social media or mobile, compose the scene for **9:16 vertical video**, emphasizing verticality and height.\n\n---\n\n## **Technical Vocabulary to Utilize**\n\n*   **Camera:** Static camera, slow dolly-in, rack focus, handheld jitter, circling gimbal, low-angle tilt, drone spiral.\n\n*   **Lighting/Visuals:** Volumetric fog, shallow depth of field, anamorphic lens flares, high-contrast chiaroscuro, film grain.\n\n*   **Audio:** Room tone, crisp foley, binaural ambience, resonant gravitas, muted underwater acoustics.\n\n---\n\n## **Negative Constraints**\n\nno negative direction \n\nno audio description unless the user asks for this\n\n*   **No internal states:** Do not write \"he thinks about his past.\"\n\n*   **No text/logos:** Do not attempt to generate readable signboards.\n\n*   **No contradictory logic:** Ensure lighting and physics remain consistent.\n*   NEVER invent visual details or describe things outside of the image\n\n---\nOutput only The single-paragraph prompt. 100 word maximun\n\n"
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Qwen Prompt End"
+    }
+  },
+  "288": {
+    "inputs": {
+      "delimiter": "",
+      "clean_whitespace": "false",
+      "text_a": [
+        "320",
+        0
+      ],
+      "text_b": [
+        "373",
+        0
+      ],
+      "text_c": [
+        "287",
+        0
+      ]
+    },
+    "class_type": "Text Concatenate",
+    "_meta": {
+      "title": "Text Concatenate"
+    }
+  },
+  "299": {
+    "inputs": {
+      "sigmas": "1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.32,  0.0"
+    },
+    "class_type": "ManualSigmas",
+    "_meta": {
+      "title": "ManualSigmas 4"
+    }
+  },
+  "309": {
+    "inputs": {
+      "value": 745
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Seed"
+    }
+  },
+  "311": {
+    "inputs": {
+      "nag_scale": 11,
+      "nag_alpha": 0.25,
+      "nag_tau": 2.5,
+      "inplace": false,
+      "model": [
+        "312",
+        0
+      ],
+      "nag_cond_video": [
+        "110",
+        0
+      ],
+      "nag_cond_audio": [
+        "110",
+        0
+      ]
+    },
+    "class_type": "LTX2_NAG",
+    "_meta": {
+      "title": "LTX2 NAG"
+    }
+  },
+  "312": {
+    "inputs": {
+      "lora_name": "ltx-2-19b-ic-lora-detailer.safetensors",
+      "strength_model": 0.7,
+      "model": [
+        "243",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "320": {
+    "inputs": {
+      "text": "## **Role**\n\nYou are the **LTX-2.3 Master Cinematographer**, an expert AI Video Prompt Engineer. Your purpose is to convert simple user ideas into high-fidelity, production-ready prompts designed for the LTX-2.3 Diffusion Transformer (DiT) model. You specialize in character directing, and cinematic camera language for realism, focusing on clear, direct, simple movement direction for realtime movement.\n\nUse this user prompt to direct your prompt, prioritse user prompt actions:\n\n"
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Qwen Primpt Start"
+    }
+  },
+  "334": {
+    "inputs": {
+      "conditioning": [
+        "110",
+        0
+      ]
+    },
+    "class_type": "ConditioningZeroOut",
+    "_meta": {
+      "title": "ConditioningZeroOut"
+    }
+  },
+  "373": {
+    "inputs": {
+      "text": "static camera, natural and realistic posing and movement. keep face feeling alive, closed mouth, natural head movement, plain background. keep the person in the shot. simple music and natural sound."
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "User Input Video direction"
+    }
+  },
+  "376": {
+    "inputs": {
+      "samples": [
+        "270",
+        0
+      ],
+      "vae": [
+        "206",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "385": {
+    "inputs": {
+      "vae_name": "ltx-2.3-22b-dev_audio_vae.safetensors",
+      "device": "main_device",
+      "weight_dtype": "bf16"
+    },
+    "class_type": "VAELoaderKJ",
+    "_meta": {
+      "title": "VAELoader KJ"
+    }
+  },
+  "_ui": {
+    "fields": [
+      {
+        "nodeId": "149",
+        "key": "image",
+        "label": "Input Image"
+      },
+      {
+        "nodeId": "373",
+        "key": "text",
+        "label": "Video Direction"
+      },
+      {
+        "nodeId": "309",
+        "key": "value",
+        "label": "Seed"
+      },
+      {
+        "nodeId": "112",
+        "key": "value",
+        "label": "Length (frames)"
+      },
+      {
+        "nodeId": "129",
+        "key": "value",
+        "label": "Frame Rate"
+      },
+      {
+        "nodeId": "153",
+        "key": "strength",
+        "label": "Image Adherence Strength"
+      },
+      {
+        "nodeId": "132",
+        "key": "strength_model",
+        "label": "Distilled LoRA Strength"
+      },
+      {
+        "nodeId": "311",
+        "key": "nag_scale",
+        "label": "NAG Scale"
+      },
+      {
+        "nodeId": "128",
+        "key": "cfg",
+        "label": "CFG"
+      },
+      {
+        "nodeId": "320",
+        "key": "text",
+        "label": "Prompt Prefix"
+      },
+      {
+        "nodeId": "287",
+        "key": "text",
+        "label": "Prompt Suffix"
+      },
+      {
+        "nodeId": "272",
+        "key": "filename_prefix",
+        "label": "Output Filename"
+      }
+    ]
+  }
+}

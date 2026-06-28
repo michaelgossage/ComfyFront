@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import { loadSettings, saveSettings, loadVideoSettings, saveVideoSettings, loadS3Settings, saveS3Settings } from '../utils/storage'
 
-export default function Settings({ onClose }) {
+export default function SettingsClient({ onClose }) {
   const saved      = loadSettings()
   const savedVideo = loadVideoSettings()
   const savedS3    = loadS3Settings()
 
   const [apiKey,          setApiKey]          = useState(saved.apiKey)
-  const [endpointId,      setEndpointId]      = useState(saved.endpointId)
   const [videoEndpointId, setVideoEndpointId] = useState(savedVideo.endpointId)
   const [cfBaseUrl,       setCfBaseUrl]       = useState(savedS3.cfBaseUrl)
   const [bucket,          setBucket]          = useState(savedS3.bucket)
@@ -18,7 +17,7 @@ export default function Settings({ onClose }) {
 
   function handleSave(e) {
     e.preventDefault()
-    saveSettings({ apiKey: apiKey.trim(), endpointId: endpointId.trim() })
+    saveSettings({ apiKey: apiKey.trim(), endpointId: '' })
     saveVideoSettings({ endpointId: videoEndpointId.trim() })
     saveS3Settings({
       cfBaseUrl:   cfBaseUrl.trim(),
@@ -35,7 +34,9 @@ export default function Settings({ onClose }) {
     <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className="modal">
         <h2>Settings</h2>
-        <p className="settings-note">Saved to this browser only. Sent only to RunPod / AWS.</p>
+        <p className="settings-note">
+          Saved in your browser only — sent directly to RunPod and AWS, never to any other server.
+        </p>
         <form onSubmit={handleSave}>
           <div className="field">
             <label htmlFor="apiKey">RunPod API Key</label>
@@ -45,17 +46,6 @@ export default function Settings({ onClose }) {
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
               placeholder="rpa_xxxxxxxxxxxx"
-              autoComplete="off"
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="endpointId">Image Endpoint ID</label>
-            <input
-              id="endpointId"
-              type="text"
-              value={endpointId}
-              onChange={(e) => setEndpointId(e.target.value)}
-              placeholder="xxxxxxxxxxxxxxxx"
               autoComplete="off"
             />
           </div>
@@ -130,7 +120,10 @@ export default function Settings({ onClose }) {
             />
           </div>
           <div className="field">
-            <label htmlFor="endpointUrl">S3 Endpoint URL <span style={{ fontWeight: 400, color: 'var(--text-muted)' }}>(optional — Cloudflare R2 etc.)</span></label>
+            <label htmlFor="endpointUrl">
+              S3 Endpoint URL{' '}
+              <span style={{ fontWeight: 400, color: 'var(--text-muted)' }}>(optional — Cloudflare R2 etc.)</span>
+            </label>
             <input
               id="endpointUrl"
               type="text"

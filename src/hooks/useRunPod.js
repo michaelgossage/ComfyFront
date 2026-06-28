@@ -31,7 +31,7 @@ export function useRunPod() {
     intervalRef.current = null
   }
 
-  async function pollStatus() {
+  async function pollStatus(submittedAt = 0, pollCount = 0) {
     const { apiKey, endpointId } = settingsRef.current
     const currentJobId = jobIdRef.current
     if (!currentJobId) return
@@ -63,16 +63,20 @@ export function useRunPod() {
         const dataUrls = outputImages.map((img) => `data:image/png;base64,${img.data}`)
         setImages(dataUrls)
 
-        const now = Date.now()
+        const now        = Date.now()
+        const durationMs = submittedAt ? now - submittedAt : undefined
         await Promise.all(dataUrls.map((imageData, i) => {
           const record = {
-            id:        `${now}_${currentJobId}_${i}`,
-            jobId:     currentJobId,
-            timestamp: now,
-            project:   projectRef.current,
+            id:          `${now}_${currentJobId}_${i}`,
+            jobId:       currentJobId,
+            timestamp:   now,
+            project:     projectRef.current,
             imageData,
             ...paramsRef.current,
-            rating:    null,
+            rating:      null,
+            submittedAt,
+            durationMs,
+            pollCount,
           }
           saveImageToServer(record)
             .then(({ path }) => logger.info('useRunPod', 'Image saved to disk', { path }))
@@ -103,6 +107,9 @@ export function useRunPod() {
     jobIdRef.current  = null
     paramsRef.current = params
     projectRef.current = project
+
+    const submittedAt = Date.now()
+    let pollCount = 0
 
     logger.info('useRunPod', 'Submitting job', { project, ...params })
 
@@ -139,7 +146,10 @@ export function useRunPod() {
       setStatus('polling')
       logger.info('useRunPod', 'Job submitted', { jobId: data.id })
 
-      intervalRef.current = setInterval(pollStatus, POLL_INTERVAL_MS)
+      intervalRef.current = setInterval(async () => {
+        pollCount++
+        await pollStatus(submittedAt, pollCount)
+      }, POLL_INTERVAL_MS)
     } catch (err) {
       setStatus('failed')
       setErrorMessage(`Network error: ${err.message}`)

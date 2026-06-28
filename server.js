@@ -4,17 +4,21 @@ import cors from 'cors'
 import fs from 'fs/promises'
 import fsSync from 'fs'
 import path from 'path'
+import { S3Client, ListObjectsV2Command } from '@aws-sdk/client-s3'
 
 const app = express()
 const PORT = process.env.SERVER_PORT ?? 3001
 const IMAGES_DIR = process.env.IMAGES_DIR ?? './saved-images'
 const WORKFLOWS_DIR = './workflows'
+const BATCHES_DIR = './batches'
+const BATCHES_FILE = `${BATCHES_DIR}/records.json`
 
 app.use(cors({ origin: 'http://localhost:5173' }))
 app.use(express.json({ limit: '200mb' }))
 
-// Ensure the images directory exists on startup
+// Ensure required directories exist on startup
 await fs.mkdir(IMAGES_DIR, { recursive: true })
+await fs.mkdir(BATCHES_DIR, { recursive: true })
 
 // POST /api/save-image
 // Body: { id, imageData (base64 data URL), metadata (object) }
@@ -123,6 +127,107 @@ app.get('/api/workflows/:name', async (req, res) => {
     }
     console.error('[workflows] Error reading workflow:', err.message)
     res.status(500).json({ error: err.message })
+  }
+})
+
+// POST /api/s3-outputs
+// Body: { jobId?, bucket, region, keyId, secret, cloudfrontBase, endpointUrl? }
+// jobId present → lists {MM-YY}/{jobId}/ (specific job)
+// jobId absent  → lists {MM-YY}/        (all videos this month)
+// endpointUrl   → use for Cloudflare R2 or other S3-compatible stores
+// Returns [{ url, filename, lastModified }]. Credentials never stored server-side.
+app.post('/api/s3-outputs', async (req, res) => {
+  const { jobId, bucket, region, keyId, secret, cloudfrontBase, endpointUrl } = req.body
+
+  if (!bucket || !region || !keyId || !secret || !cloudfrontBase) {
+    return res.json([])
+  }
+
+  try {
+    const clientConfig = {
+      region,
+      credentials: { accessKeyId: keyId, secretAccessKey: secret },
+    }
+    if (endpointUrl) {
+      clientConfig.endpoint = endpointUrl
+      clientConfig.forcePathStyle = true
+    }
+    const client = new S3Client(clientConfig)
+
+    const now    = new Date()
+    const mm     = String(now.getMonth() + 1).padStart(2, '0')
+    const yy     = String(now.getFullYear()).slice(-2)
+    const prefix = jobId ? `${mm}-${yy}/${jobId}/` : `${mm}-${yy}/`
+
+    const VIDEO_EXTS = new Set(['.mp4', '.webm', '.mov'])
+    const base = cloudfrontBase.replace(/\/$/, '')
+    const results = []
+
+    // Paginate in case there are many objects
+    let continuationToken
+    do {
+      const command = new ListObjectsV2Command({
+        Bucket: bucket,
+        Prefix: prefix,
+        ContinuationToken: continuationToken,
+      })
+      const data = await client.send(command)
+      for (const obj of data.Contents ?? []) {
+        if (VIDEO_EXTS.has(path.extname(obj.Key).toLowerCase())) {
+          results.push({
+            url:          `${base}/${obj.Key}`,
+            filename:     path.basename(obj.Key),
+            lastModified: obj.LastModified?.toISOString() ?? null,
+          })
+        }
+      }
+      continuationToken = data.NextContinuationToken
+    } while (continuationToken)
+
+    // Newest first
+    results.sort((a, b) => (b.lastModified ?? '').localeCompare(a.lastModified ?? ''))
+
+    console.log(`[s3-outputs] prefix=${prefix} found=${results.length}`)
+    res.json(results)
+  } catch (err) {
+    console.error('[s3-outputs] Error:', err.message)
+    res.status(500).json({ error: err.message })
+  }
+})
+
+// POST /api/batch-record
+// Body: { batchId, workflowName, imageCount, runsPerImage, totalJobs, jobIds, submittedAt }
+// Appends a batch manifest entry to batches/records.json
+app.post('/api/batch-record', async (req, res) => {
+  const { batchId, workflowName, imageCount, runsPerImage, totalJobs, jobIds, submittedAt } = req.body
+  if (!batchId || !workflowName) return res.status(400).json({ error: 'batchId and workflowName are required' })
+
+  try {
+    let records = []
+    try {
+      const content = await fs.readFile(BATCHES_FILE, 'utf8')
+      records = JSON.parse(content)
+    } catch {
+      // File doesn't exist yet — start fresh
+    }
+    records.push({ batchId, workflowName, imageCount, runsPerImage, totalJobs, jobIds: jobIds ?? [], submittedAt })
+    await fs.writeFile(BATCHES_FILE, JSON.stringify(records, null, 2))
+    console.log(`[batch-record] Saved batch ${batchId} (${totalJobs} jobs)`)
+    res.json({ ok: true })
+  } catch (err) {
+    console.error('[batch-record] Error:', err.message)
+    res.status(500).json({ error: err.message })
+  }
+})
+
+// GET /api/batch-records
+// Returns all persisted batch manifests
+app.get('/api/batch-records', async (_req, res) => {
+  try {
+    const content = await fs.readFile(BATCHES_FILE, 'utf8')
+    res.json(JSON.parse(content))
+  } catch {
+    res.json([])
   }
 })
 

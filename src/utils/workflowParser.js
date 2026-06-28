@@ -1,6 +1,7 @@
 // Known node fields and how to render them
 const FIELD_META = {
   CLIPTextEncode:        { text:          { type: 'textarea' } },
+  'Text Multiline':      { text:          { type: 'textarea' } },
   LoadImage:             { image:         { type: 'image' } },
   RandomNoise:           { noise_seed: { type: 'number', min: 0, step: 1, isSeed: true } },
   KSampler:              {
@@ -14,6 +15,8 @@ const FIELD_META = {
   CheckpointLoaderSimple: { ckpt_name:    { type: 'text' } },
   EmptySD3LatentImage:   { width: { type: 'number', min: 64, step: 64 }, height: { type: 'number', min: 64, step: 64 }, batch_size: { type: 'number', min: 1, step: 1 } },
   EmptyLatentImage:      { width: { type: 'number', min: 64, step: 64 }, height: { type: 'number', min: 64, step: 64 }, batch_size: { type: 'number', min: 1, step: 1 } },
+  EmptyImage:            { width: { type: 'number', min: 64, step: 32 }, height: { type: 'number', min: 64, step: 32 } },
+  ManualSigmas:          { sigmas: { type: 'text' } },
   FluxGuidance:          { guidance:      { type: 'number', min: 0, step: 0.5 } },
 }
 

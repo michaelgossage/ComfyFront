@@ -1,0 +1,1192 @@
+{
+  "_ui": {
+    "fields": [
+      { "nodeId": "149", "key": "image", "label": "Input Image" },
+      { "nodeId": "279", "key": "text", "label": "Director Prompt" },
+      { "nodeId": "278", "key": "text", "label": "Additional Notes" },
+      { "nodeId": "281", "key": "text", "label": "Rules" },
+      { "nodeId": "112", "key": "value", "label": "Length (frames, 25fps)" },
+      { "nodeId": "111", "key": "width", "label": "Width (px)" },
+      { "nodeId": "111", "key": "height", "label": "Height (px)" },
+      { "nodeId": "258", "key": "sigmas", "label": "Pass 1 Sigmas" },
+      { "nodeId": "260", "key": "sigmas", "label": "Pass 2 Sigmas" },
+      { "nodeId": "282", "key": "sigmas", "label": "Pass 3 Sigmas" },
+      { "nodeId": "114", "key": "noise_seed", "label": "Seed 1" },
+      { "nodeId": "115", "key": "noise_seed", "label": "Seed 2" },
+      { "nodeId": "249", "key": "noise_seed", "label": "Seed 3" }
+    ]
+  },
+  "75": {
+    "inputs": {
+      "filename_prefix": [
+        "190",
+        0
+      ],
+      "format": "mp4",
+      "codec": "auto",
+      "video-preview": "",
+      "video": [
+        "122",
+        0
+      ]
+    },
+    "class_type": "SaveVideo",
+    "_meta": {
+      "title": "Save Video"
+    }
+  },
+  "100": {
+    "inputs": {
+      "sigmas": "0.4525, 0.3394, 0.2263, 0.1131, 0.0"
+    },
+    "class_type": "ManualSigmas",
+    "_meta": {
+      "title": "ManualSigmas 4 base"
+    }
+  },
+  "103": {
+    "inputs": {
+      "cfg": 1,
+      "model": [
+        "132",
+        0
+      ],
+      "positive": [
+        "107",
+        0
+      ],
+      "negative": [
+        "107",
+        1
+      ]
+    },
+    "class_type": "CFGGuider",
+    "_meta": {
+      "title": "CFGGuider"
+    }
+  },
+  "104": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "scale_by": 1,
+      "image": [
+        "111",
+        0
+      ]
+    },
+    "class_type": "ImageScaleBy",
+    "_meta": {
+      "title": "Upscale Image By"
+    }
+  },
+  "105": {
+    "inputs": {
+      "image": [
+        "104",
+        0
+      ]
+    },
+    "class_type": "GetImageSize",
+    "_meta": {
+      "title": "Get Image Size"
+    }
+  },
+  "107": {
+    "inputs": {
+      "frame_rate": [
+        "129",
+        0
+      ],
+      "positive": [
+        "121",
+        0
+      ],
+      "negative": [
+        "110",
+        0
+      ]
+    },
+    "class_type": "LTXVConditioning",
+    "_meta": {
+      "title": "LTXVConditioning"
+    }
+  },
+  "108": {
+    "inputs": {
+      "width": [
+        "105",
+        0
+      ],
+      "height": [
+        "105",
+        1
+      ],
+      "length": [
+        "112",
+        0
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptyLTXVLatentVideo",
+    "_meta": {
+      "title": "EmptyLTXVLatentVideo"
+    }
+  },
+  "109": {
+    "inputs": {
+      "video_latent": [
+        "153",
+        0
+      ],
+      "audio_latent": [
+        "171",
+        0
+      ]
+    },
+    "class_type": "LTXVConcatAVLatent",
+    "_meta": {
+      "title": "LTXVConcatAVLatent"
+    }
+  },
+  "110": {
+    "inputs": {
+      "text": "deformed iris, distorted limbs, blurry, low quality, still frame, frames, watermark, overlay, titles, has blurbox, has subtitles, slow, morphing, wobble, 3 legs, spinning, too many fingers, webbed fingers, wrong hand count, stretching",
+      "clip": [
+        "146",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "111": {
+    "inputs": {
+      "width": 960,
+      "height": 1280,
+      "batch_size": 1,
+      "color": 0
+    },
+    "class_type": "EmptyImage",
+    "_meta": {
+      "title": "EmptyImage"
+    }
+  },
+  "112": {
+    "inputs": {
+      "value": 201
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Length"
+    }
+  },
+  "114": {
+    "inputs": {
+      "noise_seed": 650245065077568
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "115": {
+    "inputs": {
+      "noise_seed": 874644827087565
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "116": {
+    "inputs": {
+      "av_latent": [
+        "253",
+        0
+      ]
+    },
+    "class_type": "LTXVSeparateAVLatent",
+    "_meta": {
+      "title": "LTXVSeparateAVLatent"
+    }
+  },
+  "117": {
+    "inputs": {
+      "video_latent": [
+        "154",
+        0
+      ],
+      "audio_latent": [
+        "116",
+        1
+      ]
+    },
+    "class_type": "LTXVConcatAVLatent",
+    "_meta": {
+      "title": "LTXVConcatAVLatent"
+    }
+  },
+  "118": {
+    "inputs": {
+      "samples": [
+        "116",
+        0
+      ],
+      "upscale_model": [
+        "233",
+        0
+      ],
+      "vae": [
+        "206",
+        2
+      ]
+    },
+    "class_type": "LTXVLatentUpsampler",
+    "_meta": {
+      "title": "spatial"
+    }
+  },
+  "119": {
+    "inputs": {
+      "noise": [
+        "114",
+        0
+      ],
+      "guider": [
+        "103",
+        0
+      ],
+      "sampler": [
+        "136",
+        0
+      ],
+      "sigmas": [
+        "282",
+        0
+      ],
+      "latent_image": [
+        "257",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "121": {
+    "inputs": {
+      "text": [
+        "239",
+        0
+      ],
+      "clip": [
+        "146",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "122": {
+    "inputs": {
+      "fps": [
+        "129",
+        0
+      ],
+      "images": [
+        "126",
+        0
+      ]
+    },
+    "class_type": "CreateVideo",
+    "_meta": {
+      "title": "Create Video"
+    }
+  },
+  "124": {
+    "inputs": {
+      "av_latent": [
+        "119",
+        1
+      ]
+    },
+    "class_type": "LTXVSeparateAVLatent",
+    "_meta": {
+      "title": "LTXVSeparateAVLatent"
+    }
+  },
+  "126": {
+    "inputs": {
+      "tile_size": 768,
+      "overlap": 64,
+      "temporal_size": 2048,
+      "temporal_overlap": 8,
+      "samples": [
+        "124",
+        0
+      ],
+      "vae": [
+        "206",
+        2
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "128": {
+    "inputs": {
+      "cfg": 1.2,
+      "model": [
+        "243",
+        0
+      ],
+      "positive": [
+        "107",
+        0
+      ],
+      "negative": [
+        "107",
+        1
+      ]
+    },
+    "class_type": "CFGGuider",
+    "_meta": {
+      "title": "CFGGuider"
+    }
+  },
+  "129": {
+    "inputs": {
+      "value": 25
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "Frame Rate(float)"
+    }
+  },
+  "130": {
+    "inputs": {
+      "value": 25
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Frame Rate(int)"
+    }
+  },
+  "132": {
+    "inputs": {
+      "lora_name": "ltx-2.3-22b-distilled-lora-384.safetensors",
+      "strength_model": 0.6,
+      "model": [
+        "206",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Distilled LoRA"
+    }
+  },
+  "135": {
+    "inputs": {
+      "sampler_name": "euler_ancestral_cfg_pp"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "136": {
+    "inputs": {
+      "sampler_name": "euler_cfg_pp"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "146": {
+    "inputs": {
+      "clip_name1": "gemma_3_12B_it_fp8_e4m3fn.safetensors",
+      "clip_name2": "ltx-2.3-22b-dev_embeddings_connectors.safetensors",
+      "type": "ltxv",
+      "device": "default"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": {
+      "title": "DualCLIPLoader"
+    }
+  },
+  "149": {
+    "inputs": {
+      "image": "A17476_SU26_ACU_E_C001.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "151": {
+    "inputs": {
+      "longer_edge": 2564,
+      "images": [
+        "149",
+        0
+      ]
+    },
+    "class_type": "ResizeImagesByLongerEdge",
+    "_meta": {
+      "title": "Resize Images by Longer Edge"
+    }
+  },
+  "152": {
+    "inputs": {
+      "img_compression": 0,
+      "image": [
+        "151",
+        0
+      ]
+    },
+    "class_type": "LTXVPreprocess",
+    "_meta": {
+      "title": "LTXVPreprocess"
+    }
+  },
+  "153": {
+    "inputs": {
+      "strength": 0.8,
+      "bypass": false,
+      "vae": [
+        "206",
+        2
+      ],
+      "image": [
+        "152",
+        0
+      ],
+      "latent": [
+        "108",
+        0
+      ]
+    },
+    "class_type": "LTXVImgToVideoInplace",
+    "_meta": {
+      "title": "LTXVImgToVideoInplace"
+    }
+  },
+  "154": {
+    "inputs": {
+      "strength": 1,
+      "bypass": false,
+      "vae": [
+        "206",
+        2
+      ],
+      "image": [
+        "152",
+        0
+      ],
+      "latent": [
+        "118",
+        0
+      ]
+    },
+    "class_type": "LTXVImgToVideoInplace",
+    "_meta": {
+      "title": "LTXVImgToVideoInplace"
+    }
+  },
+  "164": {
+    "inputs": {
+      "sigmas": "1., 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0"
+    },
+    "class_type": "ManualSigmas",
+    "_meta": {
+      "title": "ManualSigmas"
+    }
+  },
+  "171": {
+    "inputs": {
+      "frames_number": [
+        "112",
+        0
+      ],
+      "frame_rate": [
+        "130",
+        0
+      ],
+      "batch_size": 1,
+      "audio_vae": [
+        "207",
+        0
+      ]
+    },
+    "class_type": "LTXVEmptyLatentAudio",
+    "_meta": {
+      "title": "LTXV Empty Latent Audio"
+    }
+  },
+  "172": {
+    "inputs": {
+      "noise": [
+        "115",
+        0
+      ],
+      "guider": [
+        "128",
+        0
+      ],
+      "sampler": [
+        "135",
+        0
+      ],
+      "sigmas": [
+        "260",
+        0
+      ],
+      "latent_image": [
+        "109",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "188": {
+    "inputs": {
+      "sigmas": "0.8025, 0.7273, 0.6522, 0.5753, 0.4947, 0.4087, 0.3161, 0.2172, 0.1118, 0.0"
+    },
+    "class_type": "ManualSigmas",
+    "_meta": {
+      "title": "ManualSigmas"
+    }
+  },
+  "190": {
+    "inputs": {
+      "string_a": "video/20250508/Look 01/improvement testing full runs/ea_up1-1_",
+      "string_b": [
+        "191",
+        0
+      ],
+      "delimiter": ""
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "Concatenate"
+    }
+  },
+  "191": {
+    "inputs": {
+      "string_a": "upload_",
+      "string_b": "LTX Dev fp8 lora_1280 full ratio_",
+      "delimiter": ""
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "Concatenate"
+    }
+  },
+  "194": {
+    "inputs": {
+      "mode": "incremental_image",
+      "seed": 1065966278627061,
+      "index": 0,
+      "label": "Batch 001",
+      "path": [
+        "209",
+        0
+      ],
+      "pattern": "*",
+      "allow_RGBA_output": "false",
+      "filename_text_extension": "true"
+    },
+    "class_type": "Load Image Batch",
+    "_meta": {
+      "title": "Load Image Batch"
+    }
+  },
+  "203": {
+    "inputs": {
+      "preview_markdown": "Close-up shot from behind of a model wearing off-white sleeveless top and matching wide-leg trousers standing still against plain white wall and gray floor under soft diffused lighting; locked static camera. Her hair is tied up neatly, ear adorned by small gold hoop earrings visible subtly. She breathes gently — lips part minutely with each inhale, eyes occasionally blink slowly without turning head. Chest rises and falls naturally with rhythm, shoulders relaxed but not slackened. Arms remain loosely by sides, fingers lightly curled inward as if resting near hips though never touching fabric. Feet stay planted firmly, toes barely shifting weight forward or back for subtle balance adjustments. Head tilts infinitesimal degrees left and right during pauses between breaths. Shoulders lift ever so slight when exhaling, relaxing again smoothly upon inhalation. Minimal movements keep posture grounded yet alive: no sudden shifts, just quiet sway of torso, occasional twitch of neck muscle. Hair strands shift softly due to air current unseen outside frame. Background remains untouched — clean, silent space emphasizing garment’s texture and silhouette. Only faintest hint of motion blur appears where limbs move fastest — all else crisp and precise. Silent ambiance enhances presence of fabrics’ drape and body's calm awareness within minimalist setting.",
+      "preview_text": "Close-up shot from behind of a model wearing off-white sleeveless top and matching wide-leg trousers standing still against plain white wall and gray floor under soft diffused lighting; locked static camera. Her hair is tied up neatly, ear adorned by small gold hoop earrings visible subtly. She breathes gently — lips part minutely with each inhale, eyes occasionally blink slowly without turning head. Chest rises and falls naturally with rhythm, shoulders relaxed but not slackened. Arms remain loosely by sides, fingers lightly curled inward as if resting near hips though never touching fabric. Feet stay planted firmly, toes barely shifting weight forward or back for subtle balance adjustments. Head tilts infinitesimal degrees left and right during pauses between breaths. Shoulders lift ever so slight when exhaling, relaxing again smoothly upon inhalation. Minimal movements keep posture grounded yet alive: no sudden shifts, just quiet sway of torso, occasional twitch of neck muscle. Hair strands shift softly due to air current unseen outside frame. Background remains untouched — clean, silent space emphasizing garment’s texture and silhouette. Only faintest hint of motion blur appears where limbs move fastest — all else crisp and precise. Silent ambiance enhances presence of fabrics’ drape and body's calm awareness within minimalist setting.",
+      "previewMode": null,
+      "source": [
+        "239",
+        0
+      ]
+    },
+    "class_type": "PreviewAny",
+    "_meta": {
+      "title": "Preview as Text"
+    }
+  },
+  "205": {
+    "inputs": {
+      "width": 1600,
+      "height": 1600,
+      "upscale_method": "lanczos",
+      "keep_proportion": "resize",
+      "pad_color": "0, 0, 0",
+      "crop_position": "center",
+      "divisible_by": 2,
+      "device": "cpu",
+      "image": [
+        "149",
+        0
+      ]
+    },
+    "class_type": "ImageResizeKJv2",
+    "_meta": {
+      "title": "Resize Image v2"
+    }
+  },
+  "206": {
+    "inputs": {
+      "ckpt_name": "ltx-2.3-22b-dev-fp8.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "207": {
+    "inputs": {
+      "vae_name": "ltx-2.3-22b-dev_audio_vae.safetensors",
+      "device": "main_device",
+      "weight_dtype": "bf16"
+    },
+    "class_type": "VAELoaderKJ",
+    "_meta": {
+      "title": "VAELoader KJ"
+    }
+  },
+  "209": {
+    "inputs": {
+      "value": "C:\\Users\\danie\\Dropbox\\PROJECTS\\2026\\PROJECT HORSE\\Test Data\\Look 01"
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "String"
+    }
+  },
+  "220": {
+    "inputs": {
+      "sage_attention": "auto",
+      "allow_compile": false,
+      "model": [
+        "132",
+        0
+      ]
+    },
+    "class_type": "PathchSageAttentionKJ",
+    "_meta": {
+      "title": "Patch Sage Attention KJ"
+    }
+  },
+  "229": {
+    "inputs": {
+      "samples": [
+        "116",
+        0
+      ],
+      "upscale_model": [
+        "233",
+        0
+      ],
+      "vae": [
+        "206",
+        2
+      ]
+    },
+    "class_type": "LTXVLatentUpsampler",
+    "_meta": {
+      "title": "LTXVLatentUpsampler"
+    }
+  },
+  "233": {
+    "inputs": {
+      "model_name": "ltx-2.3-spatial-upscaler-x2-1.1.safetensors"
+    },
+    "class_type": "LatentUpscaleModelLoader",
+    "_meta": {
+      "title": "Load Latent Upscale Model"
+    }
+  },
+  "239": {
+    "inputs": {
+      "model_name": "Qwen3-VL-4B-Instruct",
+      "quantization": "None (FP16)",
+      "attention_mode": "sdpa",
+      "preset_prompt": "🖼️ Ultra Detailed Description",
+      "custom_prompt": [
+        "280",
+        0
+      ],
+      "max_tokens": 256,
+      "keep_model_loaded": false,
+      "seed": 943882687,
+      "image": [
+        "264",
+        0
+      ]
+    },
+    "class_type": "AILab_QwenVL",
+    "_meta": {
+      "title": "QwenVL"
+    }
+  },
+  "243": {
+    "inputs": {
+      "lora_name": "Ltx2.3-Licon-VBVR-I2V-390K-R32.safetensors",
+      "strength_model": 0.8,
+      "model": [
+        "132",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "248": {
+    "inputs": {
+      "sigmas": "1., 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.0"
+    },
+    "class_type": "ManualSigmas",
+    "_meta": {
+      "title": "ManualSigmas 6 mid"
+    }
+  },
+  "249": {
+    "inputs": {
+      "noise_seed": 650245065077654
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "250": {
+    "inputs": {
+      "cfg": 1.2,
+      "model": [
+        "243",
+        0
+      ],
+      "positive": [
+        "107",
+        0
+      ],
+      "negative": [
+        "107",
+        1
+      ]
+    },
+    "class_type": "CFGGuider",
+    "_meta": {
+      "title": "CFGGuider"
+    }
+  },
+  "251": {
+    "inputs": {
+      "sigmas": "0.725, 0.421875, 0.32, 0.23,0.0"
+    },
+    "class_type": "ManualSigmas",
+    "_meta": {
+      "title": "ManualSigmas 4 mid"
+    }
+  },
+  "252": {
+    "inputs": {
+      "sampler_name": "euler_ancestral_cfg_pp"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "253": {
+    "inputs": {
+      "noise": [
+        "249",
+        0
+      ],
+      "guider": [
+        "250",
+        0
+      ],
+      "sampler": [
+        "252",
+        0
+      ],
+      "sigmas": [
+        "258",
+        0
+      ],
+      "latent_image": [
+        "257",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "254": {
+    "inputs": {
+      "sigmas": "1., 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.32, 0.23, 0.16, 0.1,0.0"
+    },
+    "class_type": "ManualSigmas",
+    "_meta": {
+      "title": "ManualSigmas"
+    }
+  },
+  "255": {
+    "inputs": {
+      "av_latent": [
+        "172",
+        0
+      ]
+    },
+    "class_type": "LTXVSeparateAVLatent",
+    "_meta": {
+      "title": "LTXVSeparateAVLatent"
+    }
+  },
+  "256": {
+    "inputs": {
+      "strength": 1,
+      "bypass": false,
+      "vae": [
+        "206",
+        2
+      ],
+      "image": [
+        "152",
+        0
+      ],
+      "latent": [
+        "255",
+        0
+      ]
+    },
+    "class_type": "LTXVImgToVideoInplace",
+    "_meta": {
+      "title": "LTXVImgToVideoInplace"
+    }
+  },
+  "257": {
+    "inputs": {
+      "video_latent": [
+        "256",
+        0
+      ],
+      "audio_latent": [
+        "255",
+        1
+      ]
+    },
+    "class_type": "LTXVConcatAVLatent",
+    "_meta": {
+      "title": "LTXVConcatAVLatent"
+    }
+  },
+  "258": {
+    "inputs": {
+      "sigmas": "0.975, 0.909375, 0.725, 0.421875, 0.32, 0.23,0.1,0.05,0.0"
+    },
+    "class_type": "ManualSigmas",
+    "_meta": {
+      "title": "ManualSigmas 8 low"
+    }
+  },
+  "260": {
+    "inputs": {
+      "sigmas": "1., 0.99375, 0.9875, 0.98125,  0.0"
+    },
+    "class_type": "ManualSigmas",
+    "_meta": {
+      "title": "ManualSigmas 4"
+    }
+  },
+  "263": {
+    "inputs": {
+      "images": [
+        "264",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "264": {
+    "inputs": {
+      "longer_edge": 1400,
+      "images": [
+        "149",
+        0
+      ]
+    },
+    "class_type": "ResizeImagesByLongerEdge",
+    "_meta": {
+      "title": "Resize Images by Longer Edge"
+    }
+  },
+  "265": {
+    "inputs": {
+      "sigmas": "0.85, 0.7250, 0.4219, 0.0"
+    },
+    "class_type": "ManualSigmas",
+    "_meta": {
+      "title": "ManualSigmas 3 original"
+    }
+  },
+  "266": {
+    "inputs": {
+      "method": "reinhard",
+      "strength": 0.9,
+      "multithread": true,
+      "image_ref": [
+        "149",
+        0
+      ],
+      "image_target": [
+        "126",
+        0
+      ]
+    },
+    "class_type": "ColorMatch",
+    "_meta": {
+      "title": "Color Match"
+    }
+  },
+  "267": {
+    "inputs": {
+      "string_a": [
+        "190",
+        0
+      ],
+      "string_b": "_coloured_reinhard",
+      "delimiter": ""
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "Concatenate"
+    }
+  },
+  "268": {
+    "inputs": {
+      "fps": 25,
+      "images": [
+        "266",
+        0
+      ]
+    },
+    "class_type": "CreateVideo",
+    "_meta": {
+      "title": "Create Video"
+    }
+  },
+  "269": {
+    "inputs": {
+      "filename_prefix": [
+        "267",
+        0
+      ],
+      "format": "mp4",
+      "codec": "auto",
+      "video-preview": "",
+      "video": [
+        "268",
+        0
+      ]
+    },
+    "class_type": "SaveVideo",
+    "_meta": {
+      "title": "Save Video"
+    }
+  },
+  "270": {
+    "inputs": {
+      "av_latent": [
+        "253",
+        1
+      ]
+    },
+    "class_type": "LTXVSeparateAVLatent",
+    "_meta": {
+      "title": "LTXVSeparateAVLatent"
+    }
+  },
+  "271": {
+    "inputs": {
+      "tile_size": 768,
+      "overlap": 64,
+      "temporal_size": 2048,
+      "temporal_overlap": 8,
+      "samples": [
+        "270",
+        0
+      ],
+      "vae": [
+        "206",
+        2
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "272": {
+    "inputs": {
+      "filename_prefix": [
+        "274",
+        0
+      ],
+      "format": "mp4",
+      "codec": "auto",
+      "video-preview": "",
+      "video": [
+        "273",
+        0
+      ]
+    },
+    "class_type": "SaveVideo",
+    "_meta": {
+      "title": "Save Video"
+    }
+  },
+  "273": {
+    "inputs": {
+      "fps": [
+        "129",
+        0
+      ],
+      "images": [
+        "271",
+        0
+      ]
+    },
+    "class_type": "CreateVideo",
+    "_meta": {
+      "title": "Create Video"
+    }
+  },
+  "274": {
+    "inputs": {
+      "string_a": [
+        "190",
+        0
+      ],
+      "string_b": "_pre 2x_",
+      "delimiter": ""
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "Concatenate"
+    }
+  },
+  "275": {
+    "inputs": {
+      "sigmas": "0.85, 0.7250, 0.4219, 0.3394, 0.2263,0.0"
+    },
+    "class_type": "ManualSigmas",
+    "_meta": {
+      "title": "ManualSigmas 3 original"
+    }
+  },
+  "276": {
+    "inputs": {
+      "sage_attention": "auto",
+      "allow_compile": false,
+      "model": [
+        "243",
+        0
+      ]
+    },
+    "class_type": "PathchSageAttentionKJ",
+    "_meta": {
+      "title": "Patch Sage Attention KJ"
+    }
+  },
+  "278": {
+    "inputs": {
+      "text": "subtle expressions in face. mouth slightly opens and closes with breathing. Relaxed shoulders."
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Text Multiline"
+    }
+  },
+  "279": {
+    "inputs": {
+      "text": "You are an expert fashion e-commerce film director. Focus on detailed, chronological descriptions of actions and scenes.\n\nLook at the image then use the following template based on only what can be seen in the image to write the perfect prompt. Imagine what happens immediately after this frame.\n\n\"\n[Shot Type/Angle] of [Detailed description of Subject and clothing] [Doing Actions] in [Environment] with [Lighting] and [Camera Movement].\"\n\n\nDirect the woman to get natural, simple, realistic movement, constanly finding new poses, moving withing the frame. The woman should maintain the same general position as the starting image throught the video with constant pose changes one after another. Include, blinking, facial micro expressions, lip movement while breathing, eye line, natural arm movement, chest slightly exanding and contracting with breathing. Describe 8 seconds worth of movments. Prioritise realism and real-time speed of motion, physically accurate. Locked static camera. Ambient sound or music. sharp focus and frames, natural motion blur.\n\nAdditional notes from user to tune prompt:\n\n"
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Text Multiline"
+    }
+  },
+  "280": {
+    "inputs": {
+      "delimiter": "=",
+      "clean_whitespace": "false",
+      "text_a": [
+        "279",
+        0
+      ],
+      "text_b": [
+        "278",
+        0
+      ],
+      "text_c": [
+        "281",
+        0
+      ]
+    },
+    "class_type": "Text Concatenate",
+    "_meta": {
+      "title": "Text Concatenate"
+    }
+  },
+  "281": {
+    "inputs": {
+      "text": "\nFollow these rules:\n- Never show more than what you can see in the image. \n- Do not spin or turn around. \n- Keep the person facing the same direction as the start. \n- Use simple direct language rather than complex wording.\n- Avoing mentioning hands.\n- No negative language. \n\nThe prompt should be a single paragraph about 200 words long.\n"
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Text Multiline"
+    }
+  },
+  "282": {
+    "inputs": {
+      "sigmas": "0.7250, 0.4219, 0.2263,0.0"
+    },
+    "class_type": "ManualSigmas",
+    "_meta": {
+      "title": "ManualSigmas 4"
+    }
+  },
+  "283": {
+    "inputs": {
+      "sigmas": "0.8025, 0.7250, 0.4219, 0.2263,0.0"
+    },
+    "class_type": "ManualSigmas",
+    "_meta": {
+      "title": "ManualSigmas 4"
+    }
+  }
+}

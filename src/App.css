@@ -481,3 +481,275 @@ textarea { resize: vertical; }
   gap: 0.75rem;
   margin-top: 0.5rem;
 }
+
+/* ── Job list (video queue) ───────────────────────────────── */
+.job-list {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.job-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 0.15rem;
+}
+
+.job-card {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.65rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 12px;
+}
+
+.job-card--completed { border-color: rgba(76, 175, 80, 0.35); }
+.job-card--failed    { border-color: rgba(220, 70, 70, 0.35); }
+
+.job-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.job-elapsed { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+.spinner-sm {
+  width: 14px; height: 14px; flex-shrink: 0;
+  border: 2px solid var(--surface);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+.job-badge {
+  font-size: 11px;
+  padding: 1px 7px;
+  border-radius: 99px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+.job-badge--done { background: rgba(76, 175, 80, 0.18); color: #81c784; }
+.job-badge--fail { background: var(--error-bg); color: var(--error-text); cursor: help; }
+
+.job-dismiss {
+  background: none;
+  border: none;
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  padding: 0.1rem 0.35rem;
+  font-size: 11px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.job-dismiss:hover { color: var(--error-text); }
+
+/* ── Stats panel ──────────────────────────────────────────── */
+.stats-panel { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.stat-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+@media (max-width: 600px) {
+  .stat-cards { grid-template-columns: repeat(2, 1fr); }
+}
+
+.stat-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-value {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.stats-section { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.stats-heading {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.stats-table th, .stats-table td {
+  text-align: left;
+  padding: 0.45rem 0.65rem;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.stats-table th {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--surface2);
+}
+
+.stats-table tr:last-child td { border-bottom: none; }
+.stats-table tr:hover td { background: var(--surface2); }
+
+.stats-name-cell {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.top-record {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.top-record-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  background: var(--surface2);
+  cursor: pointer;
+  user-select: none;
+}
+.top-record-header:hover { background: #2a2a2a; }
+
+.top-record-name {
+  flex: 1;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.top-record-meta { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+
+.top-record-fields {
+  padding: 0.6rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 12px;
+}
+
+.top-record-chip {
+  color: var(--text);
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* ── Run log ──────────────────────────────────────────────── */
+.run-log { display: flex; flex-direction: column; gap: 2px; }
+
+.run-log-header {
+  display: grid;
+  grid-template-columns: 1fr 70px 130px 24px 16px;
+  gap: 0.5rem;
+  padding: 0.3rem 0.65rem;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  background: var(--surface2);
+  border-radius: var(--radius) var(--radius) 0 0;
+  border: 1px solid var(--border);
+  border-bottom: none;
+}
+
+.run-row {
+  border: 1px solid var(--border);
+  border-radius: 0;
+  overflow: hidden;
+}
+.run-row:first-of-type { border-radius: var(--radius) var(--radius) 0 0; }
+.run-row:last-of-type  { border-radius: 0 0 var(--radius) var(--radius); }
+.run-row + .run-row    { margin-top: -1px; }
+
+.run-row-main {
+  display: grid;
+  grid-template-columns: 1fr 70px 130px 24px 16px;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.45rem 0.65rem;
+  font-size: 13px;
+  cursor: default;
+}
+.run-row-main:hover { background: var(--surface2); }
+
+.run-workflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.run-duration { color: var(--accent); font-variant-numeric: tabular-nums; font-size: 12px; }
+.run-date     { color: var(--text-muted); font-size: 12px; white-space: nowrap; }
+.run-expand   { color: var(--text-muted); font-size: 10px; text-align: right; }
+
+.run-rating       { font-size: 13px; line-height: 1; }
+.run-rating--yes  { filter: none; }
+.run-rating--no   { filter: grayscale(0.4); }
+.run-badge        { font-size: 11px; font-weight: 600; line-height: 1; }
+.run-badge--fail  { color: var(--error-text); }
+
+.run-fields {
+  padding: 0.5rem 0.65rem 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  background: var(--surface2);
+  border-top: 1px solid var(--border);
+}
+
+.run-field-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 0.5rem;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.run-field-key {
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.run-field-val {
+  color: var(--text);
+  word-break: break-word;
+}

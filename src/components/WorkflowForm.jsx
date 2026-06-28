@@ -15,19 +15,22 @@ function batchItemLabel(fields, values) {
   return 'item'
 }
 
-export default function WorkflowForm({ fields, workflowJson, uploadImage, onSubmit, onAddToBatch, batchQueue, onRemoveFromBatch, onRunBatch, disabled }) {
+export default function WorkflowForm({ fields, workflowJson, uploadImage, onSubmit, onAddToBatch, batchQueue, onRemoveFromBatch, onRunBatch, disabled, initialValues, submitLabel }) {
   const [values, setValues]     = useState({})
   const [previews, setPreviews] = useState({})
 
-  // Reset form values whenever the workflow changes
+  // Reset form values when workflow changes, applying any initialValues overrides
   useEffect(() => {
     const initial = {}
     for (const f of fields) {
-      initial[`${f.nodeId}::${f.key}`] = f.type === 'image' ? '' : f.defaultValue
+      const key = `${f.nodeId}::${f.key}`
+      initial[key] = (initialValues && initialValues[key] != null)
+        ? initialValues[key]
+        : (f.type === 'image' ? '' : f.defaultValue)
     }
     setValues(initial)
     setPreviews({})
-  }, [fields])
+  }, [fields, initialValues])
 
   function setValue(fieldKey, value) {
     setValues(prev => ({ ...prev, [fieldKey]: value }))
@@ -46,7 +49,7 @@ export default function WorkflowForm({ fields, workflowJson, uploadImage, onSubm
 
   function handleSubmit(e) {
     e.preventDefault()
-    onSubmit(fillWorkflow(workflowJson, values))
+    onSubmit(fillWorkflow(workflowJson, values), values)
   }
 
   function handleAddToBatch() {
@@ -169,7 +172,7 @@ export default function WorkflowForm({ fields, workflowJson, uploadImage, onSubm
           </button>
         )}
         <button type="submit" className="btn-primary btn-generate" disabled={disabled}>
-          {disabled ? 'Generating…' : 'Generate Now'}
+          {submitLabel ?? (disabled ? 'Generating…' : 'Generate Now')}
         </button>
       </div>
 

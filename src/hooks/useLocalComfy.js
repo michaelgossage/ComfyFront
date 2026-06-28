@@ -53,12 +53,14 @@ export function useLocalComfy() {
     return data.name
   }, [])
 
-  const submit = useCallback(async (filledWorkflow, project = '') => {
+  const submit = useCallback(async (filledWorkflow, project = '', workflowName = '', fieldValues = {}) => {
     setStatus('connecting')
     setOutputs([])
     setErrorMessage(null)
     setProgress({ value: 0, max: 0 })
     projectRef.current = project
+
+    const submittedAt = Date.now()
 
     const { host, port } = loadLocalSettings()
     const baseUrl = `http://${host}:${port}`
@@ -114,8 +116,9 @@ export function useLocalComfy() {
           const history = await histRes.json()
           const outputNodes = history[promptId]?.outputs ?? {}
 
-          const records = []
-          const now = Date.now()
+          const records    = []
+          const now        = Date.now()
+          const durationMs = now - submittedAt
 
           for (const nodeOutputs of Object.values(outputNodes)) {
             const files = [...(nodeOutputs.images ?? []), ...(nodeOutputs.videos ?? []), ...(nodeOutputs.gifs ?? [])]
@@ -151,12 +154,14 @@ export function useLocalComfy() {
 
                 const record = {
                   id, timestamp: now, project,
+                  workflowName, fieldValues,
                   mediaType: ext === '.gif' ? 'gif' : 'video',
                   mediaUrl: mediaUrl ?? null,
                   displayUrl,
                   filename,
                   imageData: null,
                   rating: null,
+                  submittedAt, durationMs,
                 }
                 await saveImage(record).catch(e => logger.warn('useLocalComfy', 'IndexedDB save failed', e))
                 records.push(record)
@@ -165,11 +170,13 @@ export function useLocalComfy() {
                 const dataUrl = await blobToBase64(blob)
                 const record = {
                   id, timestamp: now, project,
+                  workflowName, fieldValues,
                   mediaType: 'image',
                   mediaUrl: null,
                   imageData: dataUrl,
                   filename,
                   rating: null,
+                  submittedAt, durationMs,
                 }
                 // Also save to disk
                 fetch(`${SERVER}/api/save-image`, {

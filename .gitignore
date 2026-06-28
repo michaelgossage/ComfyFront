@@ -1,6 +1,6 @@
 node_modules/
 dist/
+dist-client/
 .env
 saved-images/
-workflows/*.json
-!workflows/flux-image.json
+workflows/BIN/

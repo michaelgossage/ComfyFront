@@ -17,6 +17,7 @@ export default function LocalComfyTab({ project }) {
   const [storedOutputs, setStoredOutputs] = useState([])
   const [settingsOpen, setSettingsOpen]   = useState(false)
   const [loadError, setLoadError]         = useState(null)
+  const [reuseValues, setReuseValues]     = useState(null)
 
   // Batch state
   const [batchQueue, setBatchQueue]   = useState([])   // items waiting to run
@@ -78,7 +79,7 @@ export default function LocalComfyTab({ project }) {
     }
     const next = batchQueueRef.current.shift()
     setBatchIndex(i => i + 1)
-    submit(next.filledWorkflow, project)
+    submit(next.filledWorkflow, project, next.workflowName ?? selected, next.fieldValues ?? {})
   }, [status])
 
   async function handleRatingChange(id, rating) {
@@ -90,9 +91,16 @@ export default function LocalComfyTab({ project }) {
     }
   }
 
+  function handleReuseSettings(record) {
+    if (record.workflowName && record.workflowName !== selected) {
+      setSelected(record.workflowName)
+    }
+    setReuseValues(record.fieldValues ?? {})
+  }
+
   function handleAddToBatch(values, label) {
     const filledWorkflow = fillWorkflow(workflowJson, values)
-    setBatchQueue(prev => [...prev, { id: crypto.randomUUID(), filledWorkflow, label }])
+    setBatchQueue(prev => [...prev, { id: crypto.randomUUID(), filledWorkflow, label, workflowName: selected, fieldValues: values }])
   }
 
   function handleRemoveFromBatch(id) {
@@ -106,7 +114,7 @@ export default function LocalComfyTab({ project }) {
     batchQueueRef.current = items.slice(1)  // rest will run after first completes
     setBatchTotal(items.length)
     setBatchIndex(1)
-    submit(items[0].filledWorkflow, project)
+    submit(items[0].filledWorkflow, project, items[0].workflowName ?? selected, items[0].fieldValues ?? {})
   }
 
   return (
@@ -146,12 +154,13 @@ export default function LocalComfyTab({ project }) {
             fields={fields}
             workflowJson={workflowJson}
             uploadImage={uploadImage}
-            onSubmit={(filled) => submit(filled, project)}
+            onSubmit={(filled, values) => submit(filled, project, selected, values)}
             onAddToBatch={handleAddToBatch}
             batchQueue={batchQueue}
             onRemoveFromBatch={handleRemoveFromBatch}
             onRunBatch={handleRunBatch}
             disabled={isGenerating}
+            initialValues={reuseValues}
           />
         )}
       </section>
@@ -166,6 +175,7 @@ export default function LocalComfyTab({ project }) {
           errorMessage={errorMessage}
           onReset={reset}
           onRatingChange={handleRatingChange}
+          onReuseSettings={handleReuseSettings}
         />
       </section>
     </main>
