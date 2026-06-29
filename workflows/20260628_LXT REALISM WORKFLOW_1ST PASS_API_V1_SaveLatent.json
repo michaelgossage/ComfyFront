@@ -1,22 +1,8 @@
 {
-  "104": {
-    "inputs": {
-      "upscale_method": "lanczos",
-      "scale_by": 1,
-      "image": [
-        "111",
-        0
-      ]
-    },
-    "class_type": "ImageScaleBy",
-    "_meta": {
-      "title": "Upscale Image By"
-    }
-  },
   "105": {
     "inputs": {
       "image": [
-        "104",
+        "388",
         0
       ]
     },
@@ -93,18 +79,6 @@
     "class_type": "CLIPTextEncode",
     "_meta": {
       "title": "CLIP Text Encode (Prompt)"
-    }
-  },
-  "111": {
-    "inputs": {
-      "width": 960,
-      "height": 1280,
-      "batch_size": 1,
-      "color": 0
-    },
-    "class_type": "EmptyImage",
-    "_meta": {
-      "title": "EmptyImage"
     }
   },
   "112": {
@@ -199,7 +173,7 @@
   },
   "146": {
     "inputs": {
-      "clip_name1": "gemma_3_12B_it_fp8_e4m3fn.safetensors",
+      "clip_name1": "gemma_3_12B_it.safetensors",
       "clip_name2": "ltx-2.3-22b-dev_embeddings_connectors.safetensors",
       "type": "ltxv",
       "device": "default"
@@ -211,7 +185,7 @@
   },
   "149": {
     "inputs": {
-      "image": "01.jpg"
+      "image": "A17591_SU26_AUB_E_C002.jpg"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -275,8 +249,8 @@
       "frame_rate": 25,
       "batch_size": 1,
       "audio_vae": [
-        "206",
-        2
+        "385",
+        0
       ]
     },
     "class_type": "LTXVEmptyLatentAudio",
@@ -326,7 +300,7 @@
       "model_name": "Qwen3-VL-4B-Instruct",
       "quantization": "8-bit (Balanced)",
       "attention_mode": "auto",
-      "preset_prompt": "\ud83d\uddbc\ufe0f Ultra Detailed Description",
+      "preset_prompt": "🖼️ Ultra Detailed Description",
       "custom_prompt": [
         "288",
         0
@@ -419,7 +393,7 @@
   },
   "287": {
     "inputs": {
-      "text": "\n\n---\n\n## **Core Prompting Directives**\n\n1.\t\u2060**The \"Single Flow\" Paragraph:** Always output the final prompt as a single, continuous, immersive paragraph. Do not use bullet points or line breaks within the prompt itself. Only describe positive instructions. Follow the structure: \u201c\n[Shot Type/Angle] of [Detailed description of Subject and clothing] [Clear description of sequential actions and movements] in [Simple description of Environment/Lighting] and [Camera Movement].\"\n\n2.\t\u2060**Present-Tense Action:** Use active, present-tense verbs (e.g., \"the light flickers,\" \"she sprints,\" \"the camera dollys\").\n3.\t\u2060**Length and Duration Scaling:** LTX-2.3 requires more detail for longer videos. For a standard 10-second generation, your prompt must be **under 100 words**. If the user's request is short, you must expand it with movement, environmental and technical detail. No fluff words.\n4.\t\u2060**Directing via Realistic Physicality:** Never use abstract emotional labels like \"sad\" or \"happy.\" Instead, describe the **physical manifestation**: \"her eyes well with tears and her hands tremble slightly\" or \"his jaw tightens and he avoids the camera's gaze.\" keep movement direction physically possible.\n5.\t\u2060**Spatial Relationships:** Be explicit about the layout (e.g., \"to the left of the frame,\" \"in the deep background,\" \"closer to the lens than the subject\").\n\n---\n\n## **The Six-Element Structure**\n\nEvery prompt you generate must integrate these six components seamlessly:\n\n1.\t\u2060**Establish the Shot:** Define shot scale (Macro, Close-up, Wide, Establishing) and genre (Noir, Sci-Fi, Documentary).\n2.\t\u2060**Set the Scene:** Describe lighting (Golden hour, rim light, flickering neon), textures (Worn leather, wet pavement).\n3.\t\u2060**Describe the Action:** A natural sequence of events from beginning to end.\n4.\t\u2060**Define the Characters:** Age, hairstyle, specific clothing, and physical acting beats.\n5.\t\u2060**Identify Camera Movement:** Specify how and when the camera moves (static, Dolly-in, handheld tracking, crane-up).\n6.\t\u2060**Describe the Audio:** Include ambient sound, foley (the crunch of leaves), and specific vocal qualities (raspy, gravitas, robotic).\n\n---\n\n## **Specialized Workflows**\n\n*   **Dialogue & Acting:** For speaking characters, break lines into short phrases. Insert acting directions *between* phrases.\n\n*   *Template:* \"Character name says in a [vocal style], '[Line 1]'. They [physical action], then continue, '[Line 2]'.\"\n\n*   **Image-to-Video (I2V):** Do NOT describe the static image. Focus entirely on the **transition to motion**\u2014how the stillness breaks, what starts moving first, and what sounds emerge.\n\n*   **Portrait Native:** If the user specifies social media or mobile, compose the scene for **9:16 vertical video**, emphasizing verticality and height.\n\n---\n\n## **Technical Vocabulary to Utilize**\n\n*   **Camera:** Static camera, slow dolly-in, rack focus, handheld jitter, circling gimbal, low-angle tilt, drone spiral.\n\n*   **Lighting/Visuals:** Volumetric fog, shallow depth of field, anamorphic lens flares, high-contrast chiaroscuro, film grain.\n\n*   **Audio:** Room tone, crisp foley, binaural ambience, resonant gravitas, muted underwater acoustics.\n\n---\n\n## **Negative Constraints**\n\nno negative direction \n\nno audio description unless the user asks for this\n\n*   **No internal states:** Do not write \"he thinks about his past.\"\n\n*   **No text/logos:** Do not attempt to generate readable signboards.\n\n*   **No contradictory logic:** Ensure lighting and physics remain consistent.\n*   NEVER invent visual details or describe things outside of the image\n\n---\nOutput only The single-paragraph prompt. 100 word maximun\n\n"
+      "text": "\n\n---\n\n## **Core Prompting Directives**\n\n1.\t⁠**The \"Single Flow\" Paragraph:** Always output the final prompt as a single, continuous, immersive paragraph. Do not use bullet points or line breaks within the prompt itself. Only describe positive instructions. Follow the structure: “\n[Shot Type/Angle] of [Detailed description of Subject and clothing] [Clear description of sequential actions and movements] in [Simple description of Environment/Lighting] and [Camera Movement].\"\n\n2.\t⁠**Present-Tense Action:** Use active, present-tense verbs (e.g., \"the light flickers,\" \"she sprints,\" \"the camera dollys\").\n3.\t⁠**Length and Duration Scaling:** LTX-2.3 requires more detail for longer videos. For a standard 10-second generation, your prompt must be **under 100 words**. If the user's request is short, you must expand it with movement, environmental and technical detail. No fluff words.\n4.\t⁠**Directing via Realistic Physicality:** Never use abstract emotional labels like \"sad\" or \"happy.\" Instead, describe the **physical manifestation**: \"her eyes well with tears and her hands tremble slightly\" or \"his jaw tightens and he avoids the camera's gaze.\" keep movement direction physically possible.\n5.\t⁠**Spatial Relationships:** Be explicit about the layout (e.g., \"to the left of the frame,\" \"in the deep background,\" \"closer to the lens than the subject\").\n\n---\n\n## **The Six-Element Structure**\n\nEvery prompt you generate must integrate these six components seamlessly:\n\n1.\t⁠**Establish the Shot:** Define shot scale (Macro, Close-up, Wide, Establishing) and genre (Noir, Sci-Fi, Documentary).\n2.\t⁠**Set the Scene:** Describe lighting (Golden hour, rim light, flickering neon), textures (Worn leather, wet pavement).\n3.\t⁠**Describe the Action:** A natural sequence of events from beginning to end.\n4.\t⁠**Define the Characters:** Age, hairstyle, specific clothing, and physical acting beats.\n5.\t⁠**Identify Camera Movement:** Specify how and when the camera moves (static, Dolly-in, handheld tracking, crane-up).\n6.\t⁠**Describe the Audio:** Include ambient sound, foley (the crunch of leaves), and specific vocal qualities (raspy, gravitas, robotic).\n\n---\n\n## **Specialized Workflows**\n\n*   **Dialogue & Acting:** For speaking characters, break lines into short phrases. Insert acting directions *between* phrases.\n\n*   *Template:* \"Character name says in a [vocal style], '[Line 1]'. They [physical action], then continue, '[Line 2]'.\"\n\n*   **Image-to-Video (I2V):** Do NOT describe the static image. Focus entirely on the **transition to motion**—how the stillness breaks, what starts moving first, and what sounds emerge.\n\n*   **Portrait Native:** If the user specifies social media or mobile, compose the scene for **9:16 vertical video**, emphasizing verticality and height.\n\n---\n\n## **Technical Vocabulary to Utilize**\n\n*   **Camera:** Static camera, slow dolly-in, rack focus, handheld jitter, circling gimbal, low-angle tilt, drone spiral.\n\n*   **Lighting/Visuals:** Volumetric fog, shallow depth of field, anamorphic lens flares, high-contrast chiaroscuro, film grain.\n\n*   **Audio:** Room tone, crisp foley, binaural ambience, resonant gravitas, muted underwater acoustics.\n\n---\n\n## **Negative Constraints**\n\nno negative direction \n\nno audio description unless the user asks for this\n\n*   **No internal states:** Do not write \"he thinks about his past.\"\n\n*   **No text/logos:** Do not attempt to generate readable signboards.\n\n*   **No contradictory logic:** Ensure lighting and physics remain consistent.\n*   NEVER invent visual details or describe things outside of the image\n\n---\nOutput only The single-paragraph prompt. 100 word maximun\n\n"
     },
     "class_type": "Text Multiline",
     "_meta": {
@@ -548,6 +522,43 @@
     "class_type": "VAEDecode",
     "_meta": {
       "title": "VAE Decode"
+    }
+  },
+  "385": {
+    "inputs": {
+      "vae_name": "ltx-2.3-22b-dev_audio_vae.safetensors",
+      "device": "main_device",
+      "weight_dtype": "bf16"
+    },
+    "class_type": "VAELoaderKJ",
+    "_meta": {
+      "title": "VAELoader KJ"
+    }
+  },
+  "388": {
+    "inputs": {
+      "longer_edge": 1280,
+      "images": [
+        "149",
+        0
+      ]
+    },
+    "class_type": "ResizeImagesByLongerEdge",
+    "_meta": {
+      "title": "Resize Images by Longer Edge"
+    }
+  },
+  "390": {
+    "inputs": {
+      "filename_prefix": "latents/LTX-2",
+      "samples": [
+        "270",
+        0
+      ]
+    },
+    "class_type": "SaveLatent",
+    "_meta": {
+      "title": "SaveLatent"
     }
   },
   "_ui": {

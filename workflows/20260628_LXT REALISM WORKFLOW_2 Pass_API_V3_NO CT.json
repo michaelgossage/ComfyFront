@@ -1,22 +1,8 @@
 {
-  "104": {
-    "inputs": {
-      "upscale_method": "lanczos",
-      "scale_by": 1,
-      "image": [
-        "111",
-        0
-      ]
-    },
-    "class_type": "ImageScaleBy",
-    "_meta": {
-      "title": "Upscale Image By"
-    }
-  },
   "105": {
     "inputs": {
       "image": [
-        "104",
+        "388",
         0
       ]
     },
@@ -84,7 +70,7 @@
   },
   "110": {
     "inputs": {
-      "text": "deformed iris, distorted limbs, blurry, low quality, still frame, frames, watermark, overlay, titles, has blurbox, has subtitles, slow, morphing, wobble, 3 legs, spinning, too many fingers, webbed fingers, wrong hand count, wrong finger count, stretching, sighing, frozen face, yawning",
+      "text": "deformed iris, distorted limbs, blurry, low quality, still frame, frames, watermark, overlay, titles, has blurbox, has subtitles, slow, morphing, wobble, 3 legs, spinning, too many fingers, webbed fingers, wrong hand count, wrong finger count, stretching, sighing, frozen face, yawning, rings",
       "clip": [
         "146",
         0
@@ -93,18 +79,6 @@
     "class_type": "CLIPTextEncode",
     "_meta": {
       "title": "CLIP Text Encode (Prompt)"
-    }
-  },
-  "111": {
-    "inputs": {
-      "width": 960,
-      "height": 1280,
-      "batch_size": 1,
-      "color": 0
-    },
-    "class_type": "EmptyImage",
-    "_meta": {
-      "title": "EmptyImage"
     }
   },
   "112": {
@@ -131,7 +105,7 @@
   "121": {
     "inputs": {
       "text": [
-        "203",
+        "239",
         0
       ],
       "clip": [
@@ -199,7 +173,7 @@
   },
   "146": {
     "inputs": {
-      "clip_name1": "gemma_3_12B_it_fp8_e4m3fn.safetensors",
+      "clip_name1": "gemma_3_12B_it.safetensors",
       "clip_name2": "ltx-2.3-22b-dev_embeddings_connectors.safetensors",
       "type": "ltxv",
       "device": "default"
@@ -211,7 +185,7 @@
   },
   "149": {
     "inputs": {
-      "image": "01.jpg"
+      "image": "A17591_SU26_AUB_E_C002.jpg"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -272,13 +246,10 @@
         "112",
         0
       ],
-      "frame_rate": [
-        "367",
-        0
-      ],
+      "frame_rate": 25,
       "batch_size": 1,
       "audio_vae": [
-        "207",
+        "385",
         0
       ]
     },
@@ -315,21 +286,6 @@
       "title": "SamplerCustomAdvanced"
     }
   },
-  "203": {
-    "inputs": {
-      "preview_markdown": "",
-      "preview_text": "",
-      "previewMode": null,
-      "source": [
-        "239",
-        0
-      ]
-    },
-    "class_type": "PreviewAny",
-    "_meta": {
-      "title": "Preview Prompt"
-    }
-  },
   "206": {
     "inputs": {
       "ckpt_name": "ltx-2.3-22b-dev.safetensors"
@@ -337,17 +293,6 @@
     "class_type": "CheckpointLoaderSimple",
     "_meta": {
       "title": "Load Checkpoint"
-    }
-  },
-  "207": {
-    "inputs": {
-      "vae_name": "ltx-2.3-22b-dev_audio_vae.safetensors",
-      "device": "main_device",
-      "weight_dtype": "bf16"
-    },
-    "class_type": "VAELoaderKJ",
-    "_meta": {
-      "title": "VAELoader KJ"
     }
   },
   "239": {
@@ -554,18 +499,6 @@
       "title": "ConditioningZeroOut"
     }
   },
-  "367": {
-    "inputs": {
-      "a": [
-        "129",
-        0
-      ]
-    },
-    "class_type": "LTXFloatToInt",
-    "_meta": {
-      "title": "🅛🅣🅧 Float To Int"
-    }
-  },
   "373": {
     "inputs": {
       "text": "static camera, natural and realistic posing and movement. keep face feeling alive, closed mouth, natural head movement, plain background. keep the person in the shot. simple music and natural sound."
@@ -590,5 +523,353 @@
     "_meta": {
       "title": "VAE Decode"
     }
+  },
+  "385": {
+    "inputs": {
+      "vae_name": "ltx-2.3-22b-dev_audio_vae.safetensors",
+      "device": "main_device",
+      "weight_dtype": "bf16"
+    },
+    "class_type": "VAELoaderKJ",
+    "_meta": {
+      "title": "VAELoader KJ"
+    }
+  },
+  "388": {
+    "inputs": {
+      "longer_edge": 1280,
+      "images": [
+        "149",
+        0
+      ]
+    },
+    "class_type": "ResizeImagesByLongerEdge",
+    "_meta": {
+      "title": "Resize Images by Longer Edge"
+    }
+  },
+  "390": {
+    "inputs": {
+      "filename_prefix": "latents/LTX-2",
+      "samples": [
+        "270",
+        0
+      ]
+    },
+    "class_type": "SaveLatent",
+    "_meta": {
+      "title": "SaveLatent"
+    }
+  },
+  "391": {
+    "inputs": {
+      "strength": 1,
+      "bypass": false,
+      "vae": [
+        "206",
+        2
+      ],
+      "image": [
+        "152",
+        0
+      ],
+      "latent": [
+        "392",
+        0
+      ]
+    },
+    "class_type": "LTXVImgToVideoInplace",
+    "_meta": {
+      "title": "LTXVImgToVideoInplace"
+    }
+  },
+  "392": {
+    "inputs": {
+      "samples": [
+        "416",
+        0
+      ],
+      "upscale_model": [
+        "399",
+        0
+      ],
+      "vae": [
+        "206",
+        2
+      ]
+    },
+    "class_type": "LTXVLatentUpsampler",
+    "_meta": {
+      "title": "spatial"
+    }
+  },
+  "393": {
+    "inputs": {
+      "video_latent": [
+        "391",
+        0
+      ],
+      "audio_latent": [
+        "416",
+        1
+      ]
+    },
+    "class_type": "LTXVConcatAVLatent",
+    "_meta": {
+      "title": "LTXVConcatAVLatent"
+    }
+  },
+  "394": {
+    "inputs": {
+      "fps": [
+        "129",
+        0
+      ],
+      "images": [
+        "406",
+        0
+      ]
+    },
+    "class_type": "CreateVideo",
+    "_meta": {
+      "title": "Create Video"
+    }
+  },
+  "395": {
+    "inputs": {
+      "lora_name": "ltx-2.3-22b-distilled-lora-1.1_fro90_ceil72_condsafe.safetensors",
+      "strength_model": 0.5,
+      "model": [
+        "206",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Distilled LoRA"
+    }
+  },
+  "396": {
+    "inputs": {
+      "cfg": 1,
+      "model": [
+        "401",
+        0
+      ],
+      "positive": [
+        "121",
+        0
+      ],
+      "negative": [
+        "110",
+        0
+      ]
+    },
+    "class_type": "CFGGuider",
+    "_meta": {
+      "title": "CFGGuider"
+    }
+  },
+  "397": {
+    "inputs": {
+      "lora_name": "ltx-2-19b-ic-lora-detailer.safetensors",
+      "strength_model": 0.4,
+      "model": [
+        "401",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "398": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "399": {
+    "inputs": {
+      "model_name": "ltx-2.3-spatial-upscaler-x1.5-1.0.safetensors"
+    },
+    "class_type": "LatentUpscaleModelLoader",
+    "_meta": {
+      "title": "Load Latent Upscale Model"
+    }
+  },
+  "401": {
+    "inputs": {
+      "lora_name": "skin-LTXLora-step00004000.comfy.safetensors",
+      "strength_model": 1,
+      "model": [
+        "395",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "402": {
+    "inputs": {
+      "filename_prefix": "video/LTX-2_upscale_",
+      "format": "mp4",
+      "codec": "auto",
+      "video": [
+        "394",
+        0
+      ]
+    },
+    "class_type": "SaveVideo",
+    "_meta": {
+      "title": "Save Video"
+    }
+  },
+  "403": {
+    "inputs": {
+      "av_latent": [
+        "404",
+        1
+      ]
+    },
+    "class_type": "LTXVSeparateAVLatent",
+    "_meta": {
+      "title": "LTXVSeparateAVLatent"
+    }
+  },
+  "404": {
+    "inputs": {
+      "noise": [
+        "115",
+        0
+      ],
+      "guider": [
+        "396",
+        0
+      ],
+      "sampler": [
+        "398",
+        0
+      ],
+      "sigmas": [
+        "410",
+        0
+      ],
+      "latent_image": [
+        "393",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "406": {
+    "inputs": {
+      "samples": [
+        "403",
+        0
+      ],
+      "vae": [
+        "206",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "410": {
+    "inputs": {
+      "sigmas": "0.600, 0.563, 0.522, 0.476, 0.424, 0.364, 0.294, 0.213, 0.116, 0.07,0.000"
+    },
+    "class_type": "ManualSigmas",
+    "_meta": {
+      "title": "ManualSigmas 4"
+    }
+  },
+  "416": {
+    "inputs": {
+      "av_latent": [
+        "172",
+        0
+      ]
+    },
+    "class_type": "LTXVSeparateAVLatent",
+    "_meta": {
+      "title": "LTXVSeparateAVLatent"
+    }
+  },
+  "_ui": {
+    "fields": [
+      {
+        "nodeId": "149",
+        "key": "image",
+        "label": "Input Image"
+      },
+      {
+        "nodeId": "373",
+        "key": "text",
+        "label": "Video Direction"
+      },
+      {
+        "nodeId": "309",
+        "key": "value",
+        "label": "Seed"
+      },
+      {
+        "nodeId": "112",
+        "key": "value",
+        "label": "Length (frames)"
+      },
+      {
+        "nodeId": "129",
+        "key": "value",
+        "label": "Frame Rate"
+      },
+      {
+        "nodeId": "153",
+        "key": "strength",
+        "label": "Image Adherence Strength"
+      },
+      {
+        "nodeId": "132",
+        "key": "strength_model",
+        "label": "Distilled LoRA Strength"
+      },
+      {
+        "nodeId": "311",
+        "key": "nag_scale",
+        "label": "NAG Scale"
+      },
+      {
+        "nodeId": "128",
+        "key": "cfg",
+        "label": "CFG"
+      },
+      {
+        "nodeId": "320",
+        "key": "text",
+        "label": "Prompt Prefix"
+      },
+      {
+        "nodeId": "287",
+        "key": "text",
+        "label": "Prompt Suffix"
+      },
+      {
+        "nodeId": "272",
+        "key": "filename_prefix",
+        "label": "Output Filename"
+      }
+    ]
   }
 }

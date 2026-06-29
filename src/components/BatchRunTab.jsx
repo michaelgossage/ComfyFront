@@ -46,6 +46,7 @@ export default function BatchRunTab() {
   const [loadError, setLoadError]       = useState(null)
   const [imageFiles, setImageFiles]     = useState([])
   const [runsPerImage, setRunsPerImage] = useState(3)
+  const [randomizeSeed, setRandomizeSeed] = useState(true)
   const fileInputRef                    = useRef(null)
 
   const { submitBatch, status, submitted, total, errorMsg, reset } = useBatchSubmit()
@@ -68,7 +69,6 @@ export default function BatchRunTab() {
       .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json() })
       .then(json => {
         setWorkflowJson(json)
-        // Exclude image fields — images are provided via the multi-file picker
         setFields(parseWorkflow(json).filter(f => f.type !== 'image'))
       })
       .catch(err => {
@@ -76,6 +76,10 @@ export default function BatchRunTab() {
         setLoadError(`Could not load workflow "${selected}": ${err.message}`)
       })
   }, [selected])
+
+  // Seed field names used to filter them out of the form when randomize is on
+  const isSeedField = f => f.isSeed || f.label.toLowerCase().includes('seed')
+  const visibleFields = randomizeSeed ? fields.filter(f => !isSeedField(f)) : fields
 
   function handleFileChange(e) {
     setImageFiles(Array.from(e.target.files))
@@ -87,7 +91,7 @@ export default function BatchRunTab() {
   }
 
   function handleFormSubmit(_filled, fieldValues) {
-    submitBatch({ imageFiles, workflow: workflowJson, workflowName: selected, runsPerImage, fieldValues })
+    submitBatch({ imageFiles, workflow: workflowJson, workflowName: selected, runsPerImage, fieldValues, randomizeSeed })
   }
 
   const totalJobs = imageFiles.length * runsPerImage
@@ -145,30 +149,43 @@ export default function BatchRunTab() {
           )}
         </div>
 
-        {/* Runs per image */}
+        {/* Runs per image + seed toggle */}
         <div className="field">
           <label htmlFor="runs-per-image">Runs per image</label>
-          <input
-            id="runs-per-image"
-            type="number"
-            min={1}
-            max={20}
-            value={runsPerImage}
-            onChange={e => setRunsPerImage(Math.max(1, Number(e.target.value)))}
-            disabled={isSubmitting}
-            style={{ width: 80 }}
-          />
-          {imageFiles.length > 0 && (
-            <span style={{ marginLeft: '0.75rem', fontSize: 12, color: 'var(--text-muted)' }}>
-              = {totalJobs} total jobs
-            </span>
-          )}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <input
+                id="runs-per-image"
+                type="number"
+                min={1}
+                max={20}
+                value={runsPerImage}
+                onChange={e => setRunsPerImage(Math.max(1, Number(e.target.value)))}
+                disabled={isSubmitting}
+                style={{ width: 80 }}
+              />
+              {imageFiles.length > 0 && (
+                <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+                  = {totalJobs} total jobs
+                </span>
+              )}
+            </div>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: 13, cursor: 'pointer', userSelect: 'none' }}>
+              <input
+                type="checkbox"
+                checked={randomizeSeed}
+                onChange={e => setRandomizeSeed(e.target.checked)}
+                disabled={isSubmitting}
+              />
+              Randomize seed per job
+            </label>
+          </div>
         </div>
 
-        {/* Workflow params (seed auto-randomised per run) */}
-        {workflowJson && fields.length > 0 && (
+        {/* Workflow params */}
+        {workflowJson && visibleFields.length > 0 && (
           <WorkflowForm
-            fields={fields}
+            fields={visibleFields}
             workflowJson={workflowJson}
             uploadImage={() => Promise.resolve('')}
             onSubmit={handleFormSubmit}
@@ -177,8 +194,8 @@ export default function BatchRunTab() {
           />
         )}
 
-        {/* No-fields workflow: show submit button ourselves */}
-        {workflowJson && fields.length === 0 && (
+        {/* No visible fields: show submit button ourselves */}
+        {workflowJson && visibleFields.length === 0 && (
           <button
             className="btn-primary btn-generate"
             disabled={isSubmitting || isDone || imageFiles.length === 0}

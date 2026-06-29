@@ -1,0 +1,52 @@
+[
+  {
+    "batchId": "f7b18d9a-cdb4-4593-b8b1-c800209cf578",
+    "workflowName": "20260628_LXT REALISM WORKFLOW_2 Pass_API_V3_NO CT",
+    "imageCount": 5,
+    "runsPerImage": 1,
+    "totalJobs": 5,
+    "jobIds": [
+      "2c99df31-2b29-4b60-b05b-a0dfa7e83c6b-e1",
+      "a6e8f9ae-3859-4cf1-a742-821ed20cc7d7-e1",
+      "014a4a13-73e5-4aa1-a62b-f9c51cf79d43-e2",
+      "54e338e6-42c3-4f6a-8149-59fe4daf7ace-e1",
+      "59b78caa-a6c6-4fdb-a021-db2e04647e2e-e2"
+    ],
+    "submittedAt": "2026-06-28T19:55:33.946Z"
+  },
+  {
+    "batchId": "ab71a7bc-2537-4af0-9b3e-0ae8bb7e0a19",
+    "workflowName": "20260628_LXT REALISM WORKFLOW_2 Pass_API_V3_NO CT",
+    "imageCount": 5,
+    "runsPerImage": 1,
+    "totalJobs": 5,
+    "jobIds": [
+      "31b9b57e-ce66-4f93-b270-19749b2045bf-e2",
+      "a09f9fad-86a6-4348-bf21-32eeb8bbed53-e2",
+      "45f8ac6c-59c1-4a03-9f31-6fa53880f33c-e1",
+      "07b21634-8793-4202-a3a3-02eb722e7992-e1",
+      "fd3f9618-2b68-488e-9b0f-5f4351f577c5-e2"
+    ],
+    "submittedAt": "2026-06-28T19:56:23.145Z"
+  },
+  {
+    "batchId": "8adfe334-eba4-4283-8ec7-6843d97921db",
+    "workflowName": "20260628_LXT REALISM WORKFLOW_2 Pass_API_V3_NO CT",
+    "imageCount": 5,
+    "runsPerImage": 2,
+    "totalJobs": 10,
+    "jobIds": [
+      "b2a9c4e7-f150-4336-9b77-b070bd33663e-e2",
+      "f163ccd0-9ae6-4d3c-ac6d-37b526586ad4-e1",
+      "c14d25a7-7cc6-4a52-bc58-a715c749f0f3-e1",
+      "73fcb0d5-9d9c-4650-94c5-2e9fa807de49-e2",
+      "754f73ca-d7ca-407d-b112-71b872f4bbac-e2",
+      "85ff77eb-adb3-4066-86ae-4532b0724693-e1",
+      "7c7b094b-538f-44c9-ab23-2c8c516af636-e2",
+      "cf5a9f14-481c-42c2-b1f6-b14881a308f3-e2",
+      "7ed4df51-6a1e-4f7f-8d82-b1b4ad4a808f-e2",
+      "1940ebf3-2028-420d-ba1c-6885f9328512-e2"
+    ],
+    "submittedAt": "2026-06-28T20:08:50.728Z"
+  }
+]

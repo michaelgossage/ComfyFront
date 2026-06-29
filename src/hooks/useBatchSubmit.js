@@ -15,9 +15,12 @@ function fileToBase64(file) {
   })
 }
 
-function findSeedField(workflow) {
-  const fields = parseWorkflow(workflow)
-  return fields.find(f => f.isSeed) ?? null
+// Returns all seed-like fields — matches KSampler/RandomNoise via isSeed flag,
+// and PrimitiveInt "Seed" nodes (common in LTX workflows) via label.
+function findSeedFields(workflow) {
+  return parseWorkflow(workflow).filter(
+    f => f.isSeed || f.label.toLowerCase().includes('seed')
+  )
 }
 
 function randomSeed() {
@@ -35,7 +38,7 @@ export function useBatchSubmit() {
   const [errorMsg, setErrorMsg]   = useState(null)
   const [jobIds, setJobIds]       = useState([])
 
-  async function submitBatch({ imageFiles, workflow, workflowName, runsPerImage, fieldValues }) {
+  async function submitBatch({ imageFiles, workflow, workflowName, runsPerImage, fieldValues, randomizeSeed = true }) {
     setStatus('submitting')
     setSubmitted(0)
     setJobIds([])
@@ -48,7 +51,7 @@ export function useBatchSubmit() {
     if (!endpointId) { setErrorMsg('No video endpoint ID set in Settings.'); setStatus('error'); return }
     if (!imageFiles?.length) { setErrorMsg('No images selected.'); setStatus('error'); return }
 
-    const seedField = findSeedField(workflow)
+    const seedFields = randomizeSeed ? findSeedFields(workflow) : []
     const totalJobs = imageFiles.length * runsPerImage
     setTotal(totalJobs)
 
@@ -65,12 +68,19 @@ export function useBatchSubmit() {
         return
       }
 
+      // Parse image fields once per image file (same workflow, same nodes)
+      const imageFields = parseWorkflow(workflow).filter(f => f.type === 'image')
+
       for (let run = 0; run < runsPerImage; run++) {
         const runValues = { ...fieldValues }
 
-        if (seedField) {
-          const seedKey = `${seedField.nodeId}::${seedField.key}`
-          runValues[seedKey] = randomSeed()
+        // Inject this file's name into every LoadImage node so the worker can match it
+        for (const field of imageFields) {
+          runValues[`${field.nodeId}::${field.key}`] = file.name
+        }
+
+        for (const field of seedFields) {
+          runValues[`${field.nodeId}::${field.key}`] = randomSeed()
         }
 
         const filledWorkflow = fillWorkflow(workflow, runValues)
